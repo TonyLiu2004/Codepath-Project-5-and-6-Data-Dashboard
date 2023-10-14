@@ -40,3 +40,26 @@
 .read-the-docs {
   color: #888;
 }
+
+.stats-container {
+  display: flex;
+  flex-direction: row;
+  gap: 10px 30px;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.stat-card{
+  -webkit-backdrop-filter: blur(2px);
+  backdrop-filter: blur(2px);
+  background-color: rgb(185, 228, 240);
+  margin-bottom: 30px;
+  width: 250px;
+  border-radius: 20px;
+  text-align: center;
+}
+
+.the-world{
+  justify-content: center;
+}
