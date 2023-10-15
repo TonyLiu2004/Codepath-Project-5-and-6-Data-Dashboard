@@ -8,6 +8,7 @@ function App() {
   const [totalRecipes, setTotalRecipes] = useState(0);
   const [averageHealthScore, setAverageHealthScore] = useState(0);
   const [averageCalories, setAverageCalories] = useState(0);
+  //cuisine picker, calories slider
   useEffect(() => {
     const fetchFoodData = async () => {
       const response = await fetch(
@@ -26,7 +27,7 @@ function App() {
       setAverageHealthScore(healthScore/json.number);
       setAverageCalories((avgCalories/json.number).toFixed(2));
     };
-    fetchFoodData().catch(console);
+    fetchFoodData().catch(console);  
   }, []);
 
 
@@ -45,7 +46,17 @@ function App() {
   }
 
   const searchIngredients = searchIngredient => {
-    console.log("INGREDIENT: " + searchIngredient);
+    //let ingredients = searchIngredient.split(',').map(item => item.trim());
+    setSearchFoodInput(searchIngredient);
+    if(searchIngredient != ""){
+      const filtered = Object.entries(foodData.results).filter((item)=>
+        item[1].nutrition.ingredients  
+        .some((ingredient) =>
+          ingredient.name.toLowerCase().includes(searchIngredient.toLowerCase())
+        )
+      )
+      setFilteredResults(filtered);
+    }
   }
 
   const [filteredResults, setFilteredResults] = useState([]);

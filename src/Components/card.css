@@ -1,6 +1,6 @@
 .container{
     display:flex;
-    border: 5px solid rgb(204, 204, 204);
+    border: 2px solid rgb(204, 204, 204);
     background-color: rgb(255, 255, 255);
     border-radius: 8px;
     overflow: hidden;
