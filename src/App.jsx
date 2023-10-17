@@ -32,6 +32,19 @@ function App() {
 
 
   //searches
+  const searchItems = (food, ingredient) => {
+    setFilteredResults(foodData);
+    setSearchFoodInput(food);
+    setSearchIngredint(ingredient);
+
+    let updatedResults = { ...foodData };
+
+    if(food != "") updatedResults = searchFoods(food);
+    if(ingredient != "") updatedResults = searchIngredients(ingredient);
+    
+    setFilteredResults(updatedResults);
+  };
+
   const searchFoods = searchFood => {
     setSearchFoodInput(searchFood);
     if(searchFood != ""){
@@ -41,7 +54,7 @@ function App() {
         .toLowerCase()
         .includes(searchFood.toLowerCase())
       )
-      setFilteredResults(filtered);
+      return filtered;
     }
   }
 
@@ -55,12 +68,13 @@ function App() {
           ingredient.name.toLowerCase().includes(searchIngredient.toLowerCase())
         )
       )
-      setFilteredResults(filtered);
+      return filtered;
     }
   }
 
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchFoodInput, setSearchFoodInput] = useState("");
+  const [searchIngredient, setSearchIngredint] = useState("");
   return (
     <div className = "the-world">
       <h1>Amazing Recipes!</h1>
@@ -83,20 +97,14 @@ function App() {
         <input
           type="text"
           placeholder="Foods"
-          onChange={(inputString) => searchFoods(inputString.target.value)}
+          onChange={(inputString) => searchItems(inputString.target.value,'')}
         />
         <input
           type="text"
           placeholder="Ingredients"
-          onChange={(inputString) => searchIngredients(inputString.target.value)}
+          onChange={(inputString) => searchItems('',inputString.target.value)}
         />
       </div>
-{/* testing cards
-      <Card image = "https://spoonacular.com/recipeImages/646425-312x231.jpg" ingredients = {["cookie","bum"]} name = "Fried rice" calories = "10" healthScore={100}/>
-      <Card image = "https://spoonacular.com/recipeImages/663169-312x231.jpg" ingredients = {["cookie","bum"]} name = "Random Salad" calories = "10" healthScore={100}/>
-      <Card image = "https://spoonacular.com/recipeImages/638642-312x231.jpg" ingredients = {["cookie","bum"]} name = "Bum Salad" calories = "10" healthScore={100}/>
-      <Card image = "https://spoonacular.com/recipeImages/660231-312x231.jpg" ingredients = {["cookie","bum"]} name = "Veggie Fried Rice" calories = "10" healthScore={100}/> */}
-
       {searchFoodInput.length > 0 ? 
       filteredResults.map(([dish]) =>
        <Card image={foodData.results[dish].image} 
@@ -113,15 +121,6 @@ function App() {
               healthScore={foodData.results[dish].healthScore}/>
         )
       }
-
-
-      {/* {foodData && Object.entries(foodData.results).map(([dish]) =>
-       <Card image={foodData.results[dish].image} 
-             ingredients={foodData.results[dish].nutrition.ingredients} 
-             name={foodData.results[dish].title} 
-             calories={foodData.results[dish].nutrition.nutrients[0].amount} 
-             healthScore={foodData.results[dish].healthScore}/>
-      )} */}
     </div>
   )
 }
