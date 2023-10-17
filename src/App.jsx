@@ -16,6 +16,7 @@ function App() {
         );
       const json = await response.json();
       setfoodData(json);
+      setFilteredResults(json);
       setTotalRecipes(json.totalResults);
       console.log(json); //log
       let healthScore = 0;
@@ -26,55 +27,75 @@ function App() {
       }
       setAverageHealthScore(healthScore/json.number);
       setAverageCalories((avgCalories/json.number).toFixed(2));
+      //searchItems("","");
     };
     fetchFoodData().catch(console);  
   }, []);
 
 
   //searches
-  const searchItems = (food, ingredient) => {
+  const searchItems = async (food, ingredient) => {
+    setSearched(true);
+    console.log("start");
     setFilteredResults(foodData);
-    setSearchFoodInput(food);
-    setSearchIngredint(ingredient);
-
-    let updatedResults = { ...foodData };
-
-    if(food != "") updatedResults = searchFoods(food);
-    if(ingredient != "") updatedResults = searchIngredients(ingredient);
-    
-    setFilteredResults(updatedResults);
+    console.log(foodData);
+    console.log(filteredResults);
+    if(ingredient != "") {
+       searchIngredients(filteredResults, ingredient);
+    }
+    if(food != "") {
+      searchFoods(filteredResults, food);
+    }
+    console.log("TEST");
+    console.log(filteredResults.results);
+    //setSearched(true);
+    // console.log(foodData.results[0]);
+    // console.log(foodData.results[0][1]);
+    // console.log(foodData.results[0][1][1]);
+    //setFilteredResults(updatedResults);
+    // console.log("UPDATEd");
+    //setSearched(true);
   };
 
-  const searchFoods = searchFood => {
-    setSearchFoodInput(searchFood);
-    if(searchFood != ""){
-      const filtered = Object.entries(foodData.results).filter((item)=>
-        Object.values(item[1].title)
-        .join("")
-        .toLowerCase()
-        .includes(searchFood.toLowerCase())
-      )
-      return filtered;
-    }
-  }
-
-  const searchIngredients = searchIngredient => {
-    //let ingredients = searchIngredient.split(',').map(item => item.trim());
-    setSearchFoodInput(searchIngredient);
-    if(searchIngredient != ""){
-      const filtered = Object.entries(foodData.results).filter((item)=>
-        item[1].nutrition.ingredients  
-        .some((ingredient) =>
-          ingredient.name.toLowerCase().includes(searchIngredient.toLowerCase())
+  const searchFoods = (data, searchFood) => {
+    console.log("food");
+    console.log(data);
+  
+    if (searchFood !== "") {
+      const filtered = Object.fromEntries(
+        Object.entries(data.results).filter(([, item]) =>
+          item.title.toLowerCase().includes(searchFood.toLowerCase())
         )
-      )
-      return filtered;
+      );
+  
+      data.results = filtered;
+      console.log(data);
+      console.log("food2");
     }
-  }
+  };
 
+  const searchIngredients = (data, searchIngredient) => {
+    console.log("ing");
+    console.log(data);
+  
+    if (searchIngredient !== "") {
+      const filtered = Object.fromEntries(
+        Object.entries(data.results).filter(([, item]) =>
+          item.nutrition.ingredients.some((ingredient) =>
+            ingredient.name.toLowerCase().includes(searchIngredient.toLowerCase())
+          )
+        )
+      );
+  
+      data.results = filtered;
+      console.log(data);
+      console.log("ing2");
+    }
+  };
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchFoodInput, setSearchFoodInput] = useState("");
   const [searchIngredient, setSearchIngredint] = useState("");
+  const [searched, setSearched] = useState(false);
   return (
     <div className = "the-world">
       <h1>Amazing Recipes!</h1>
@@ -97,30 +118,25 @@ function App() {
         <input
           type="text"
           placeholder="Foods"
-          onChange={(inputString) => searchItems(inputString.target.value,'')}
+          onChange={(inputString) => setSearchFoodInput(inputString.target.value)}
         />
         <input
           type="text"
           placeholder="Ingredients"
-          onChange={(inputString) => searchItems('',inputString.target.value)}
+          onChange={(inputString) => setSearchIngredint(inputString.target.value)}
         />
+        <button onClick={() => searchItems(searchFoodInput, searchIngredient)}></button>
       </div>
-      {searchFoodInput.length > 0 ? 
-      filteredResults.map(([dish]) =>
-       <Card image={foodData.results[dish].image} 
-             ingredients={foodData.results[dish].nutrition.ingredients} 
-             name={foodData.results[dish].title} 
-             calories={foodData.results[dish].nutrition.nutrients[0].amount} 
-             healthScore={foodData.results[dish].healthScore}/> 
-        )
-        : foodData && Object.entries(foodData.results).map(([dish]) =>
-        <Card image={foodData.results[dish].image} 
-              ingredients={foodData.results[dish].nutrition.ingredients} 
-              name={foodData.results[dish].title} 
-              calories={foodData.results[dish].nutrition.nutrients[0].amount} 
-              healthScore={foodData.results[dish].healthScore}/>
-        )
+      { searched ? 
+        foodData && Object.entries(foodData.results).map(([dish]) => 
+          <Card image={foodData.results[dish].image} 
+          ingredients={foodData.results[dish].nutrition.ingredients} 
+          name={foodData.results[dish].title} 
+          calories={foodData.results[dish].nutrition.nutrients[0].amount  } 
+          healthScore={foodData.results[dish].healthScore}/> 
+        ):null
       }
+      
     </div>
   )
 }
