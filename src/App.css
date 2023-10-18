@@ -63,3 +63,18 @@
 .the-world{
   justify-content: center;
 }
+
+.search-bars{
+  display:flex;
+  flex-direction: row;
+  justify-content: center;
+  max-height:30px;
+  gap: 10px;
+}
+
+.sliderClass {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  top: -15px;
+}
