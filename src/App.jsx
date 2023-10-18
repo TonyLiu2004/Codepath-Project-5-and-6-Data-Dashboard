@@ -27,7 +27,6 @@ function App() {
       }
       setAverageHealthScore(healthScore/json.number);
       setAverageCalories((avgCalories/json.number).toFixed(2));
-      //searchItems("","");
     };
     fetchFoodData().catch(console);  
   }, []);
@@ -35,27 +34,71 @@ function App() {
 
   //searches
   const searchItems = async (food, ingredient) => {
-    setSearched(true);
+    setSearchFoodInput(food);
+    setSearchIngredint(ingredient);
+  
     console.log("start");
-    setFilteredResults(foodData);
     console.log(foodData);
-    console.log(filteredResults);
-    if(ingredient != "") {
-       searchIngredients(filteredResults, ingredient);
+  
+    // Clone the original data to avoid mutating it directly
+    const initialResults = { ...foodData };
+  
+    // Set the initial results
+    setFilteredResults(initialResults);
+  
+    // Perform ingredient search if provided
+    if (ingredient !== "") {
+      const updatedResults = await searchIngredients(initialResults, ingredient);
+      setFilteredResults(updatedResults);
     }
-    if(food != "") {
-      searchFoods(filteredResults, food);
+  
+    // Perform food search if provided
+    if (food !== "") {
+      const updatedResults = await searchFoods(initialResults, food);
+      setFilteredResults(updatedResults);
     }
+  
+    // Update the display with the filtered results
+    setDisplay(
+      initialResults &&
+        Object.entries(initialResults.results).map(([dish]) => (
+          <Card
+            image={initialResults.results[dish].image}
+            ingredients={initialResults.results[dish].nutrition.ingredients}
+            name={initialResults.results[dish].title}
+            calories={initialResults.results[dish].nutrition.nutrients[0].amount}
+            healthScore={initialResults.results[dish].healthScore}
+          />
+        ))
+    );
+  
     console.log("TEST");
-    console.log(filteredResults.results);
-    //setSearched(true);
-    // console.log(foodData.results[0]);
-    // console.log(foodData.results[0][1]);
-    // console.log(foodData.results[0][1][1]);
-    //setFilteredResults(updatedResults);
-    // console.log("UPDATEd");
-    //setSearched(true);
+    console.log(initialResults.results);
   };
+  // const searchItems = async (food, ingredient) => {
+  //   setSearchFoodInput(food);
+  //   setSearchIngredint(ingredient);
+  //   setDisplay(foodData && Object.entries(foodData.results).map(([dish]) => 
+  //       <Card image={foodData.results[dish].image} 
+  //       ingredients={foodData.results[dish].nutrition.ingredients} 
+  //       name={foodData.results[dish].title} 
+  //       calories={foodData.results[dish].nutrition.nutrients[0].amount  } 
+  //       healthScore={foodData.results[dish].healthScore}/> 
+  //     )
+  //   );
+  //   console.log("start");
+  //   console.log(foodData);
+  //   console.log(filteredResults);
+  //   await setFilteredResults(foodData);
+  //   if(ingredient != "") {
+  //      await searchIngredients(filteredResults, ingredient);
+  //   }
+  //   if(food != "") {
+  //      await searchFoods(filteredResults, food);
+  //   }
+  //   console.log("TEST");
+  //   console.log(filteredResults.results);
+  // };
 
   const searchFoods = (data, searchFood) => {
     console.log("food");
@@ -95,6 +138,14 @@ function App() {
   const [filteredResults, setFilteredResults] = useState([]);
   const [searchFoodInput, setSearchFoodInput] = useState("");
   const [searchIngredient, setSearchIngredint] = useState("");
+  const [display, setDisplay] = useState(foodData && Object.entries(foodData.results).map(([dish]) => 
+                                  <Card image={foodData.results[dish].image} 
+                                  ingredients={foodData.results[dish].nutrition.ingredients} 
+                                  name={foodData.results[dish].title} 
+                                  calories={foodData.results[dish].nutrition.nutrients[0].amount  } 
+                                  healthScore={foodData.results[dish].healthScore}/> 
+                                )
+                              );
   const [searched, setSearched] = useState(false);
   return (
     <div className = "the-world">
@@ -127,14 +178,8 @@ function App() {
         />
         <button onClick={() => searchItems(searchFoodInput, searchIngredient)}></button>
       </div>
-      { searched ? 
-        foodData && Object.entries(foodData.results).map(([dish]) => 
-          <Card image={foodData.results[dish].image} 
-          ingredients={foodData.results[dish].nutrition.ingredients} 
-          name={foodData.results[dish].title} 
-          calories={foodData.results[dish].nutrition.nutrients[0].amount  } 
-          healthScore={foodData.results[dish].healthScore}/> 
-        ):null
+      {
+        display
       }
       
     </div>
