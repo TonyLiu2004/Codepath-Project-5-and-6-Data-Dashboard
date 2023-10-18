@@ -12,7 +12,7 @@ function App() {
   useEffect(() => {
     const fetchFoodData = async () => {
       const response = await fetch(
-          `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&apiKey=${API_KEY}&number=10&addRecipeInformation=true&addRecipeNutrition=true` 
+          `https://api.spoonacular.com/recipes/complexSearch?cuisine=${cuisine}&apiKey=${API_KEY}&number=100&addRecipeInformation=true&addRecipeNutrition=true` 
         );
       const json = await response.json();
       setfoodData(json);
