@@ -159,13 +159,33 @@ function App() {
       </div>
       
       <div className = "search-bars">
-        <div>
-          <label htmlFor="foodSelect">Cuisine: </label>
+        <div className = "cuisine-picker">
+          <label>Cuisine: </label>
           <select id="foodSelect" name="food" value={cuisine} onChange = {handleCuisineChange}>
-            <option value="chinese">Chinese</option>
+            <option value="african">African</option>
+            <option value="asian">Asian</option>
             <option value="american">American</option>
+            <option value="british">British</option>
+            <option value="cajun">Cajun</option>
+            <option value="caribbean">Caribbean</option>
+            <option value="chinese">Chinese</option>
+            <option value="european">European</option>
             <option value="french">French</option>
+            <option value="German">German</option>
+            <option value="Greek">Greek</option>
+            <option value="Indian">Indian</option>
+            <option value="Irish">Irish</option>
+            <option value="Italian">Italian</option>
+            <option value="Japanese">Japanese</option>
+            <option value="Jewish">Jewish</option>
+            <option value="Korean">Korean</option>
+            <option value="Mediterranean">Mediterranean</option>
             <option value="mexican">Mexican</option>
+            <option value="Nordic">Nordic</option>
+            <option value="Southern">Southern</option>
+            <option value="Spanish">Spanish</option>
+            <option value="Thai">Thai</option>
+            <option value="Vietnamese">Vietnamese</option>
           </select>
         </div>
         <input
