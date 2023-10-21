@@ -7,12 +7,14 @@ import Layout from "../routes/Layout.jsx";
 import DetailView from '../routes/DetailView.jsx';
 
 ReactDOM.createRoot(document.getElementById('root')).render(
-  <BrowserRouter>
-  <Routes>
-    <Route path="/" element={<Layout />}>
-    <Route index={true} element={<App />} />
-    <Route index={false} path="/dish/:id" element={<DetailView />} />
-    </Route>
-  </Routes>
-</BrowserRouter>
+  <React.StrictMode>
+    <BrowserRouter>
+    <Routes>
+      <Route path="/" element={<Layout />}>
+      <Route index={true} element={<App />} />
+      <Route index={false} path="/dish/:id" element={<DetailView />} />
+      </Route>
+    </Routes>
+  </BrowserRouter>
+</React.StrictMode>
 )

@@ -9,6 +9,8 @@ function App() {
   const [averageHealthScore, setAverageHealthScore] = useState(0);
   const [averageCalories, setAverageCalories] = useState(0);
   const [cuisine, setCuisine] = useState("chinese");
+  const [filteredResults, setFilteredResults] = useState(null);
+
   useEffect(() => {
     const fetchFoodData = async () => {
       const response = await fetch(
@@ -40,39 +42,24 @@ function App() {
     setSearchFoodInput(food);
     setSearchIngredint(ingredient);
   
-    console.log("start");
-    console.log(foodData);
-    const initialResults = { ...foodData };
-    setFilteredResults(initialResults);
+    let updatedResults  = { ...foodData };
+    setFilteredResults(updatedResults);
   
     if (ingredient !== "") {
-      const updatedResults = await searchIngredients(initialResults, ingredient);
+      searchIngredients(updatedResults, ingredient);
       setFilteredResults(updatedResults);
     }
   
     if (food !== "") {
-      const updatedResults = await searchFoods(initialResults, food);
+      searchFoods(updatedResults, food);
       setFilteredResults(updatedResults);
     }
   
     if(slider != 0){
-      const updatedResults = await searchCalories(initialResults, slider);
+      searchCalories(updatedResults, slider);
+      setFilteredResults(updatedResults);
     } 
-    setDisplay(
-      initialResults &&
-        Object.entries(initialResults.results).map(([dish]) => (
-          <Card
-            image={initialResults.results[dish].image}
-            ingredients={initialResults.results[dish].nutrition.ingredients}
-            name={initialResults.results[dish].title}
-            calories={initialResults.results[dish].nutrition.nutrients[0].amount}
-            healthScore={initialResults.results[dish].healthScore}
-          />
-        ))
-    );
-  
-    console.log("TEST");
-    console.log(initialResults.results);
+
   };
 
   const searchFoods = (data, searchFood) => {
@@ -95,7 +82,7 @@ function App() {
   const searchIngredients = (data, searchIngredient) => {
     console.log("ing");
     console.log(data);
-  
+    setSearched(true);
     if (searchIngredient !== "") {
       const filtered = Object.fromEntries(
         Object.entries(data.results).filter(([, item]) =>
@@ -113,12 +100,14 @@ function App() {
 
   const searchCalories = (data, calories) => {
     console.log("calories");
+    setSearched(true);
     if(calories != 0){
       const filtered = Object.fromEntries(
         Object.entries(data.results).filter(([, item]) =>
           item.nutrition.nutrients[0].amount < calories
         )
       );
+      console.log(filtered);
       data.results = filtered;
     }
   }
@@ -130,7 +119,6 @@ function App() {
     setCuisine(event.target.value);
     setSearched(false);
   };
-  const [filteredResults, setFilteredResults] = useState([]);
   const [searchFoodInput, setSearchFoodInput] = useState("");
   const [searchIngredient, setSearchIngredint] = useState("");
   const [display, setDisplay] = useState(foodData && Object.entries(foodData.results).map(([dish]) => 
@@ -143,6 +131,25 @@ function App() {
                               );
   const [searched, setSearched] = useState(false);
   const [sliderValue, setSliderValue] = useState(0);
+
+  useEffect(() => {
+    if(filteredResults != null){
+      console.log("FILTER: ");
+      console.log(filteredResults);
+      setDisplay(
+        filteredResults &&
+          Object.entries(filteredResults.results).map(([dish]) => (
+            <Card
+              image={filteredResults.results[dish].image}
+              ingredients={filteredResults.results[dish].nutrition.ingredients}
+              name={filteredResults.results[dish].title}
+              calories={filteredResults.results[dish].nutrition.nutrients[0].amount}
+              healthScore={filteredResults.results[dish].healthScore}
+            />
+          ))
+      );
+    }
+  }, [filteredResults]);
   return (
     <div className = "the-world">
       <h1>Amazing Recipes!</h1>
