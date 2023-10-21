@@ -21,7 +21,10 @@ function App() {
       console.log(json); //log
       let healthScore = 0;
       let avgCalories=0;
-      for(let i = 0;i < (json.totalResults);i++){
+      let num = 0;
+      if(json.number < json.totalResults) num = json.number;
+      else num = json.totalResults
+      for(let i = 0;i < num;i++){
         healthScore+=json.results[i].healthScore;
         avgCalories+=json.results[i].nutrition.nutrients[0].amount;
       }
