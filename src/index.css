@@ -30,9 +30,9 @@ body {
   min-width: 320px; 
   min-height: 100vh;
   background-image: url('./assets/background.jpg');
-  background-size: cover;
+  background-size:cover;
   background-position: center center; 
-  background-repeat: no-repeat;
+  background-repeat: no-repeat; 
 }
 
 h1 {
@@ -72,3 +72,17 @@ button:focus-visible {
     background-color: #f9f9f9;
   }
 }
+
+nav {
+  position: fixed; 
+  top: 0; 
+  right: 10px; 
+}
+
+
+.home-link 
+{
+  background:#1d1f1d;
+  width:75px;
+  border-radius: 10px;
+} 

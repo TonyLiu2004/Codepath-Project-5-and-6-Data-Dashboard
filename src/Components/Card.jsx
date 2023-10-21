@@ -1,7 +1,8 @@
 import React, {useState } from "react";
 import './card.css'
 
-const Card = ({name, image, ingredients, calories, healthScore}) => {
+const Card = ({name, image, ingredients, calories, healthScore, id}) => {
+    console.log(id);
     return(
         <div className = "container">
             <img className = "recipe-image" src = {image} alt = {`Image: ${image}`}/>

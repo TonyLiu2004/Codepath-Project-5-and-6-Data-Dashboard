@@ -21,12 +21,12 @@ function App() {
       console.log(json); //log
       let healthScore = 0;
       let avgCalories=0;
-      for(let i = 0;i < json.number;i++){
+      for(let i = 0;i < (json.totalResults);i++){
         healthScore+=json.results[i].healthScore;
         avgCalories+=json.results[i].nutrition.nutrients[0].amount;
       }
-      setAverageHealthScore(healthScore/json.number);
-      setAverageCalories((avgCalories/json.number).toFixed(2));
+      setAverageHealthScore((healthScore/json.totalResults).toFixed(2));
+      setAverageCalories((avgCalories/json.totalResults).toFixed(2));
     };
     fetchFoodData().catch(console);  
   }, [cuisine]);
@@ -218,7 +218,8 @@ function App() {
             ingredients={foodData.results[dish].nutrition.ingredients} 
             name={foodData.results[dish].title} 
             calories={foodData.results[dish].nutrition.nutrients[0].amount  } 
-            healthScore={foodData.results[dish].healthScore}/> 
+            healthScore={foodData.results[dish].healthScore}
+            id = {foodData.results[dish].id}/> 
           )
       }
       
