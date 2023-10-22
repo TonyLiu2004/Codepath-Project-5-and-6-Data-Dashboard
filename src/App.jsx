@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react'
 import './App.css'
 import Card from './Components/card.jsx';
+import Chart from './Components/Chart.jsx';
 const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
 function App() {
@@ -153,6 +154,10 @@ function App() {
   }, [filteredResults]);
   return (
     <div className = "the-world">
+      { searched ? 
+      <Chart data = {filteredResults}></Chart>
+      : <Chart data = {foodData}></Chart>
+      }
       <h1>Amazing Recipes!</h1>
       <div className = "stats-container">
         <div className= "stat-card">
