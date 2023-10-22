@@ -6,6 +6,8 @@ const API_KEY = import.meta.env.VITE_APP_API_KEY;
 
 const DishDetail = () =>{
     let params = useParams();
+    console.log("PARAM");
+    console.log(params);
     const [dishData, setDishData] = useState(null);
     useEffect(() => {
         const fetchDishData = async () => {
@@ -14,6 +16,7 @@ const DishDetail = () =>{
             );
           const json = await response.json();
           setDishData(json);
+          console.log("dish json");
           console.log(json); //log
         };
         fetchDishData().catch(console);  

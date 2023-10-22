@@ -145,6 +145,7 @@ function App() {
               name={filteredResults.results[dish].title}
               calories={filteredResults.results[dish].nutrition.nutrients[0].amount}
               healthScore={filteredResults.results[dish].healthScore}
+              id = {filteredResults.results[dish].id}
             />
           ))
       );
