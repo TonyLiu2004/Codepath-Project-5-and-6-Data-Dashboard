@@ -1,27 +1,24 @@
-# Web Development Project 5 - *Amazing Recipes*
+# Web Development Project 6 - Amazing Recipes
 
-Submitted by: **Tony Liu**
+Submitted by: Tony Liu
 
-This web app: **Sorts recipes based on user input and displays them**
+This web app: Displays recipes which you can click to view the recipe and some other details.
 
-Time spent: **12** hours spent in total
+Time spent: 7 hours spent in total
 
 ## Required Features
 
 The following **required** functionality is completed:
 
-- [x] **The list displays a list of data fetched using an API call**
-- [x] **Data uses the useEffect React hook and async/await syntax**
-- [x] **The app dashboard includes at least three summary statistics about the data such as**
-  - [x] Total recipes, average health score and average calories
-- [x] **A search bar allows the user to search for an item in the fetched data**
-- [x] **Multiple different filters (2+) allow the user to filter items in the database by specified categories**
+- [x] **The app includes at least one unique chart developed using the fetched data that tell an interesting story**
+- [x] **Clicking on an item in the list view displays more details about it**
+- [x] **Clicking on an item has a direct, unique link to that item's detail view page**
+
 
 The following **optional** features are implemented:
 
-- [x] Multiple filters can be applied simultaneously
-- [x] Filters use different input types such as a text input, a selection, or a slider
-- [ ] The user can enter specific bounds for filter values
+- [ ] The site's customized dashboard contains more content that explains what is interesting about the data
+- [ ] The site allows users to toggle between different data visualizations
 
 The following **additional** features are implemented:
 
@@ -29,12 +26,12 @@ The following **additional** features are implemented:
 
 ## Video Walkthrough
 
-Here's a walkthrough of implemented user stories: https://i.imgur.com/GZrvpvJ.gifv
+Here's a walkthrough of implemented user stories: https://imgur.com/a/i53Cd4o
 
-<img src='https://i.imgur.com/GZrvpvJ.gif' title='Video Walkthrough' width='' alt='Video Walkthrough' />
+<img src='https://i.imgur.com/CdXt5aj.gif' width='' alt='Video Walkthrough' />
 
 <!-- Replace this with whatever GIF tool you used! -->
-GIF created with ...  Windows Xbox Game Bar and imgur
+GIF created with Windows Xbox game bar and imgur
 <!-- Recommended tools:
 [Kap](https://getkap.co/) for macOS
 [ScreenToGif](https://www.screentogif.com/) for Windows
@@ -43,6 +40,7 @@ GIF created with ...  Windows Xbox Game Bar and imgur
 ## Notes
 
 Describe any challenges encountered while building the app.
+- Learning how to use recharts
 
 ## License
 
