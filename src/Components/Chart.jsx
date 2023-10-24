@@ -22,9 +22,9 @@ const Chart = (data) => {
 
             const dataForRecharts = Object.keys(ingredientCounts).map((ingredient) => ({
                 name: ingredient,
-                pv: ingredientCounts[ingredient],
+                count: ingredientCounts[ingredient],
               }));
-            dataForRecharts.sort((a, b) => a.pv - b.pv);
+            dataForRecharts.sort((a, b) => a.count - b.count);
             setCounts(dataForRecharts);
         }
     }, [data]);
@@ -45,7 +45,7 @@ const Chart = (data) => {
             <YAxis />
             <Tooltip />
             <Legend />
-            <Bar dataKey="pv" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+            <Bar dataKey="count" fill="#2a2587" activeBar={<Rectangle fill="pink" stroke="blue" />} />
         </BarChart>
     </ResponsiveContainer>); 
 
@@ -65,7 +65,7 @@ const Chart = (data) => {
                 <YAxis />
                 <Tooltip />
                 <Legend />
-                <Bar dataKey="pv" fill="#8884d8" activeBar={<Rectangle fill="pink" stroke="blue" />} />
+                <Bar dataKey="count" fill="#2a2587" activeBar={<Rectangle fill="pink" stroke="blue" />} />
             </BarChart>
         );
     },[counts]);

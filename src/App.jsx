@@ -154,26 +154,26 @@ function App() {
   }, [filteredResults]);
   return (
     <div className = "the-world">
-      { searched ? 
-      <Chart data = {filteredResults}></Chart>
-      : <Chart data = {foodData}></Chart>
-      }
       <h1>Amazing Recipes!</h1>
       <div className = "stats-container">
         <div className= "stat-card">
-          <h3>Total Number of Recipes</h3>
+          <h3>Total <br/>Recipes</h3>
           <h4>{totalRecipes}</h4>
         </div>
         <div className= "stat-card">
-          <h3>Average Health Score</h3>
+          <h3>Average <br/>Health Score</h3>
           <h4>{averageHealthScore}</h4>
         </div>
         <div className= "stat-card">
           <h3>Average Calories:</h3>
           <h4>{averageCalories}</h4>
         </div>
+        { searched ? 
+        <Chart data = {filteredResults}></Chart>
+        : <Chart data = {foodData}></Chart>
+        }
       </div>
-      
+      <br/>
       <div className = "search-bars">
         <div className = "cuisine-picker">
           <label>Cuisine: </label>

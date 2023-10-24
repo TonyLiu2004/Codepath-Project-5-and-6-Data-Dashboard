@@ -55,7 +55,8 @@
   backdrop-filter: blur(2px);
   background-color: rgb(255, 255, 255, 0.5);
   margin-bottom: 30px;
-  width: 250px;
+  width: 150px;
+  height:170px;
   border-radius: 20px;
   text-align: center;
 }
